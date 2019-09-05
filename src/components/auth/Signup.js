@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import SignupForm from './Forms/SignupForm'
+import SignupForm from './Forms/SignupForm';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -50,10 +50,10 @@ const Signup = () => {
           <SignupForm/>
         </DialogContent>
         <DialogActions>
-          <Button onClick={modalToggler} color="link">
+          <Button onClick={modalToggler} color="inherit">
             Cancel
           </Button>
-          <Button onClick={modalToggler} className={classes.btnPrimary}>
+          <Button className={classes.btnPrimary}>
             Signup
           </Button>
         </DialogActions>
