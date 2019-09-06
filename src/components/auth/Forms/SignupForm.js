@@ -11,14 +11,17 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  makeStyles
+  makeStyles,
+  Button,
+  Box
 } from "@material-ui/core";
 
-const SignupForm = () => {
+const SignupForm = ({ modalController }) => {
   const [values, setValues] = useState({
     showPassword: false,
     password: "",
-    email: ""
+    email: "",
+    username: ""
   });
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -32,17 +35,36 @@ const SignupForm = () => {
 
   const useStyles = makeStyles(theme => ({
     margin: {
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
+      flexGrow: 1
     },
     textField: {
       width: 300
+    },
+    btnPrimary: {
+      color: "#fff",
+      backgroundColor: "#795548",
+      '&:hover': {
+        background: "#6d4c41"
+      },
+      marginLeft: theme.spacing(1),
+    },
+    btnSignup: {
+      marginTop: theme.spacing(3),    
     }
   }));
 
   const classes = useStyles();
+  const { showPassword, password, email, username } = values;
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log({ username, password, email });
+    modalController();
+  };
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <div className={classes.margin}>
         <Grid container spacing={1} alignItems="flex-end">
           <Grid item>
@@ -53,6 +75,8 @@ const SignupForm = () => {
               id="username"
               className={classes.textField}
               label="Username"
+              value={username}
+              onChange={handleChange("username")}
             />
           </Grid>
         </Grid>
@@ -63,7 +87,7 @@ const SignupForm = () => {
             <MailRounded />
           </Grid>
           <Grid item>
-            <TextField id="email" className={classes.textField} label="Email" />
+            <TextField id="email" className={classes.textField} label="Email" value={email} onChange={handleChange("email")} />
           </Grid>
         </Grid>
       </div>
@@ -77,8 +101,8 @@ const SignupForm = () => {
               className={classes.textField}
               id="password"
               label="Password"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
+              type={showPassword ? "text" : "password"}
+              value={password}
               onChange={handleChange("password")}
               InputProps={{
                 endAdornment: (
@@ -89,7 +113,7 @@ const SignupForm = () => {
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 )
@@ -98,7 +122,15 @@ const SignupForm = () => {
           </Grid>
         </Grid>
       </div>
-    </>
+      <Box className={classes.btnSignup} display="flex" justifyContent="flex-end">
+        <Button onClick={modalController} color="inherit">
+          Cancel
+        </Button>
+        <Button className={classes.btnPrimary} type="submit">
+          Signup
+        </Button>
+      </Box>
+    </form>
   );
 };
 

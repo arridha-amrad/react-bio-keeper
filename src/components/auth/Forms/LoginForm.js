@@ -10,7 +10,9 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  makeStyles
+  makeStyles,
+  Button,
+  Box
 } from "@material-ui/core";
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -19,15 +21,26 @@ const useStyles = makeStyles(theme => ({
   textField: {
     width: 300
   },
+  btnPrimary: {
+    color: "#fff",
+    backgroundColor: "#795548",
+    '&:hover': {
+      background: "#6d4c41"
+    },
+    marginLeft: theme.spacing(1),
+  },
+  btnSignup: {
+    marginTop: theme.spacing(3),    
+  }
 }));
-const LoginForm = () => {
+const LoginForm = ({ modalController }) => {
   const [values, setValues] = useState({
     showPassword: false,
     password: "",
     email: ""
   });
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setValues({ ...values, showPassword: !showPassword });
   };
   const handleMouseDownPassword = event => {
     event.preventDefault();
@@ -35,17 +48,28 @@ const LoginForm = () => {
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
   };
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log({ email, password });
+    modalController();
+  };
   const classes = useStyles();
-
+  const { email, password, showPassword } = values;
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <div className={classes.margin}>
         <Grid container spacing={1} alignItems="flex-end">
           <Grid item>
             <MailRounded />
           </Grid>
           <Grid item>
-            <TextField id="email" className={classes.textField} label="Email" />
+            <TextField
+              id="email"
+              className={classes.textField}
+              label="Email"
+              values={email}
+              onChange={handleChange("email")}
+            />
           </Grid>
         </Grid>
       </div>
@@ -59,8 +83,8 @@ const LoginForm = () => {
               className={classes.textField}
               id="password"
               label="Password"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
+              type={showPassword ? "text" : "password"}
+              value={password}
               onChange={handleChange("password")}
               InputProps={{
                 endAdornment: (
@@ -71,7 +95,7 @@ const LoginForm = () => {
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 )
@@ -80,7 +104,16 @@ const LoginForm = () => {
           </Grid>
         </Grid>
       </div>
-    </>
+      
+      <Box display="flex" flexDirection="row-reverse" className={classes.btnSignup}>
+      <Button type="submit" className={classes.btnPrimary}>
+        Login
+      </Button>
+      <Button onClick={modalController} color="inherit">
+        Cancel
+      </Button>
+      </Box>
+    </form>
   );
 };
 

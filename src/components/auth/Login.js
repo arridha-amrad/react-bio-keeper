@@ -43,16 +43,8 @@ const Login = () => {
         <DialogTitle id="form-dialog-title" className={classes.title}>Login</DialogTitle>
         <DialogContent>
           <DialogContentText className={classes.contentText}>Login and control your data</DialogContentText>
-          <LoginForm/>
+          <LoginForm modalController={modalToggler}/>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={modalToggler} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={modalToggler} className={classes.btnPrimary}>
-            Login
-          </Button>
-        </DialogActions>
       </Dialog>
     </DialogActions>
   );

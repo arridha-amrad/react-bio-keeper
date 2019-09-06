@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import SignupForm from './Forms/SignupForm';
+import SignupForm from './Forms/SignupForm'
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -17,11 +17,6 @@ const useStyles = makeStyles(theme => ({
   },
   contentText: {
     textAlign: "center"
-  },
-  btnPrimary:{
-    color: "#fff",
-    backgroundColor: "#795548",
-    marginRight: theme.spacing(2)
   },
 }));
 
@@ -47,16 +42,16 @@ const Signup = () => {
         <DialogTitle id="form-dialog-title" className={classes.title}>Signup</DialogTitle>
         <DialogContent>
           <DialogContentText className={classes.contentText}>Signup and control your data</DialogContentText>
-          <SignupForm/>
+          <SignupForm modalController={modalToggler}/>
         </DialogContent>
-        <DialogActions>
+        {/* <DialogActions>
           <Button onClick={modalToggler} color="inherit">
             Cancel
           </Button>
-          <Button className={classes.btnPrimary}>
+          <Button className={classes.btnPrimary} type="submit">
             Signup
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </DialogActions>
   );
